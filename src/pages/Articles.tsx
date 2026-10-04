@@ -1,0 +1,1 @@
+import CollectionPage from "./CollectionPage"; export default function Articles(){return <CollectionPage kind="article" title="Health Articles" description="Read practical educational articles covering important community health topics."/>;}

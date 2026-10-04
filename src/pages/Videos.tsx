@@ -1,0 +1,1 @@
+import CollectionPage from "./CollectionPage"; export default function Videos(){return <CollectionPage kind="video" title="Health Videos" description="Watch health education videos and professional health discussions."/>;}

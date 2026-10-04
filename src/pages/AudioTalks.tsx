@@ -1,0 +1,1 @@
+import CollectionPage from "./CollectionPage"; export default function AudioTalks(){return <CollectionPage kind="audio" title="Audio Talks" description="Listen to health education talks and voice messages."/>;}

@@ -1,0 +1,30 @@
+PUNUTIE HEALTH TEACHER - NEXT STEPS
+
+1. Extract this project over your current project only after backing up the current folder.
+2. Keep your existing .env.local. Do NOT replace it with .env.example.
+3. From the project folder run:
+   npm install
+   npm run build
+4. Start it:
+   npm run dev -- --host 0.0.0.0
+5. Test:
+   /              public home
+   /talks         health talks
+   /talks/<id>    individual talk
+   /videos        videos
+   /audio         audio talks
+   /articles      articles
+   /about         profile
+   /contact       question/contact form
+   /admin/login   admin login
+   /admin         admin dashboard
+
+MEDIA STORAGE:
+The admin upload controls expect Supabase Storage buckets named:
+images, videos, audio, avatars
+If these buckets do not exist, create them in Supabase Storage and give authenticated admin users upload/read access. Public media should have public read access if you want direct public URLs.
+
+IMPORTANT:
+- Never upload .env.local.
+- This package contains source code only; node_modules and dist are intentionally excluded.
+- The existing Supabase database/auth configuration is expected to remain in .env.local.

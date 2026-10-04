@@ -71,12 +71,10 @@ function MediaUpload({field,value,onChange,setMessage}:{field:string;value:strin
 
 function RichTextEditor({
  value,
- onChange,
- setMessage
+ onChange
 }:{
  value:string;
  onChange:(v:string)=>void;
- setMessage:(v:string)=>void;
 }){
  const editorRef=useRef<HTMLDivElement>(null);
 
@@ -97,50 +95,10 @@ function RichTextEditor({
  }
 
  async function insertImage(){
-   const choice=window.prompt("Enter image URL, or type UPLOAD to choose an image from your device:");
-
-   if(!choice)return;
-
-   if(choice.trim().toUpperCase()==="UPLOAD"){
-     const input=document.createElement("input");
-     input.type="file";
-     input.accept="image/*";
-
-     input.onchange=async()=>{
-       const file=input.files?.[0];
-       if(!file)return;
-
-       setMessage("Uploading image…");
-
-       const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"-");
-       const path=`${Date.now()}-inline-${safe}`;
-
-       const {error}=await supabase.storage
-         .from("images")
-         .upload(path,file,{upsert:false});
-
-       if(error){
-         setMessage(`Image upload failed: ${error.message}`);
-         return;
-       }
-
-       const {data}=supabase.storage
-         .from("images")
-         .getPublicUrl(path);
-
-       editorRef.current?.focus();
-       document.execCommand("insertImage",false,data.publicUrl);
-       sync();
-
-       setMessage("Image inserted successfully.");
-     };
-
-     input.click();
-     return;
-   }
-
+   const url=window.prompt("Paste the image URL:");
+   if(!url)return;
    editorRef.current?.focus();
-   document.execCommand("insertImage",false,choice.trim());
+   document.execCommand("insertImage",false,url);
    sync();
  }
 
@@ -291,7 +249,6 @@ function HealthTalkEditor({
            <RichTextEditor
              value={editing.content??""}
              onChange={v=>setEditing({...editing,content:v})}
-             setMessage={setMessage}
            />
          </label>
 
