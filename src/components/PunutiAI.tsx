@@ -9,6 +9,8 @@ type PunutiAIProps = {
   context?: string;
 };
 
+const AI_API_URL = import.meta.env.VITE_AI_API_URL;
+
 export default function PunutiAI({ context = "" }: PunutiAIProps) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -29,24 +31,20 @@ export default function PunutiAI({ context = "" }: PunutiAIProps) {
     setLoading(true);
 
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      if (!AI_API_URL) {
+        throw new Error("AI service URL is not configured.");
+      }
 
-      const response = await fetch(
-        `${supabaseUrl}/functions/v1/ai-assistant`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: supabaseAnonKey,
-            Authorization: `Bearer ${supabaseAnonKey}`,
-          },
-          body: JSON.stringify({
-            message: text,
-            context,
-          }),
-        }
-      );
+      const response = await fetch(`${AI_API_URL}/api/ai`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: text,
+          context,
+        }),
+      });
 
       const data = await response.json();
 
