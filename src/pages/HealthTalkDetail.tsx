@@ -31,7 +31,7 @@ export default function HealthTalkDetail() {
         <div className="article-meta"><CalendarDays size={16}/> {dateLabel(post.published_at || post.created_at)}</div>
         {post.image_url && <img className="article-hero-image" src={post.image_url} alt={post.title}/>}
         {post.excerpt && <p className="article-lead">{post.excerpt}</p>}
-        <div className="article-content">{post.content}</div>
+        <div className="article-content" dangerouslySetInnerHTML={{ __html: post.content || "<p>No content yet.</p>" }} />
       </div>
     </main>
   );
