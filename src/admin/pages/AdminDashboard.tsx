@@ -714,7 +714,7 @@ export default function AdminDashboard(){
    <div className="admin-shell">
      <aside className="admin-sidebar">
        <div className="admin-brand">
-         <span className="brand-icon">♥</span>
+         <span className="brand-icon"><img src="/punutie-logo.png" alt="PUNUTIE HEALTH TEACHER" /></span>
          <div>
            <strong>PUNUTIE</strong>
            <small>HEALTH TEACHER</small>

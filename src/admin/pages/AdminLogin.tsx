@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { LockKeyhole, ShieldCheck } from "lucide-react";
+import { LockKeyhole } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 
 export default function AdminLogin() {
@@ -51,7 +51,7 @@ export default function AdminLogin() {
     <main className="admin-login-page">
       <section className="admin-login-card">
         <div className="admin-login-icon">
-          <ShieldCheck size={30} />
+          <img src="/punutie-logo.png" alt="PUNUTIE HEALTH TEACHER" />
         </div>
 
         <p className="admin-eyebrow">PUNUTIE HEALTH TEACHER</p>
