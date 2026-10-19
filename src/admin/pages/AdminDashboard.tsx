@@ -386,6 +386,160 @@ function HealthTalkEditor({
  );
 }
 
+function SettingsManager() {
+  const [record, setRecord] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+
+  async function loadSettings() {
+    setLoading(true);
+    setMessage("");
+
+    const { data, error } = await supabase
+      .from("contact_settings")
+      .select("*")
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      setMessage("Could not load settings: " + error.message);
+    } else {
+      setRecord(data ?? {
+        email: "",
+        phone: "",
+        whatsapp: "",
+        whatsapp_number: "",
+        address: "",
+        website: ""
+      });
+    }
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
+
+  async function saveSettings() {
+    if (!record) return;
+
+    setSaving(true);
+    setMessage("");
+
+    const payload = {
+      email: record.email || "",
+      phone: record.phone || "",
+      whatsapp: record.whatsapp || "",
+      whatsapp_number: record.whatsapp_number || "",
+      address: record.address || "",
+      website: record.website || "",
+      updated_at: new Date().toISOString()
+    };
+
+    const result = record.id
+      ? await supabase
+          .from("contact_settings")
+          .update(payload)
+          .eq("id", record.id)
+      : await supabase
+          .from("contact_settings")
+          .insert(payload)
+          .select("*")
+          .single();
+
+    if (result.error) {
+      setMessage("Save failed: " + result.error.message);
+    } else {
+      if (result.data) setRecord(result.data);
+      setMessage("Settings saved successfully.");
+      await loadSettings();
+    }
+
+    setSaving(false);
+  }
+
+  function updateField(field: string, value: string) {
+    setRecord((current: any) => ({
+      ...current,
+      [field]: value
+    }));
+  }
+
+  if (loading) {
+    return <div className="admin-loading">Loading settings…</div>;
+  }
+
+  if (!record) {
+    return (
+      <div className="admin-module">
+        <h1>Settings</h1>
+        <div className="admin-message">{message}</div>
+        <button
+          className="admin-secondary-button"
+          onClick={loadSettings}
+        >
+          <RefreshCw size={16} /> Retry
+        </button>
+      </div>
+    );
+  }
+
+  const settingsFields = [
+    { key: "email", label: "Contact email", type: "email" },
+    { key: "phone", label: "Phone number", type: "tel" },
+    { key: "whatsapp", label: "WhatsApp number", type: "tel" },
+    { key: "whatsapp_number", label: "Alternative WhatsApp number", type: "tel" },
+    { key: "address", label: "Business address", type: "text" },
+    { key: "website", label: "Website URL", type: "url" }
+  ];
+
+  return (
+    <div className="admin-module">
+      <div className="admin-module-header">
+        <div>
+          <h1>Website Settings</h1>
+          <p>Update the contact details displayed on your website.</p>
+        </div>
+
+        <button
+          className="admin-secondary-button"
+          onClick={loadSettings}
+        >
+          <RefreshCw size={16} /> Refresh
+        </button>
+      </div>
+
+      {message && <div className="admin-message">{message}</div>}
+
+      <div className="admin-panel">
+        <div className="admin-form">
+          {settingsFields.map(field => (
+            <label key={field.key}>
+              {field.label}
+              <input
+                type={field.type}
+                value={record[field.key] ?? ""}
+                onChange={e => updateField(field.key, e.target.value)}
+              />
+            </label>
+          ))}
+
+          <div className="admin-form-actions">
+            <button
+              className="admin-primary-button"
+              onClick={saveSettings}
+              disabled={saving}
+            >
+              {saving ? "Saving…" : "Save Settings"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 function Manager({item}:{item:Menu}) {
  const table=item.table!;
  const [rows,setRows]=useState<any[]>([]);
@@ -809,10 +963,15 @@ export default function AdminDashboard(){
            </div>
          </div>
          :
-         item.table?
-         <Manager item={item}/>
-         :
-         null
+active === "Settings" ?
+<SettingsManager />
+:
+item.table ?
+<Manager item={item}/>
+:
+null
+         
+     
        }
      </main>
    </div>
