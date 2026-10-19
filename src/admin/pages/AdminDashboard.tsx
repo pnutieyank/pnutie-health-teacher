@@ -618,7 +618,19 @@ function Manager({item}:{item:Menu}) {
                <label key={f}>
                  {f.replaceAll("_"," ")}
 
-                 {["image_url","thumbnail_url","video_url","audio_url","avatar_url"].includes(f)?
+                 {f==="category_id"?
+  <select
+    value={editing[f]??""}
+    onChange={e=>setEditing({...editing,[f]:e.target.value||null})}
+  >
+    <option value="">Select a category</option>
+    {categories.map(c=>(
+      <option key={c.id} value={c.id}>{c.name}</option>
+    ))}
+  </select>
+  :
+  ["image_url","thumbnail_url","video_url","audio_url","avatar_url"].includes(f)?
+
                    <MediaUpload
                      field={f}
                      value={editing[f]??""}
