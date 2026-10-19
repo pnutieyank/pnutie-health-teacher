@@ -422,7 +422,7 @@ function Manager({item}:{item:Menu}) {
 
  useEffect(()=>{
    load();
-   if(table==="posts")loadCategories();
+   if(["posts","videos","audio_talks"].includes(table))loadCategories();
  },[table]);
 
  async function save(){
@@ -761,6 +761,7 @@ export default function AdminDashboard(){
          <div className="admin-dashboard-home">
            <div className="admin-stat-grid">
              {[
+
                ["Health Talks","posts"],
                ["Videos","videos"],
                ["Audio Talks","audio_talks"],
