@@ -1,0 +1,149 @@
+.pn-crocodile {
+  width: 100%;
+  max-width: 360px;
+  display: block;
+  line-height: 0;
+}
+
+.pn-crocodile__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Tail swishes from side to side */
+.pn-crocodile__tail {
+  transform-box: view-box;
+  transform-origin: 108px 145px;
+  animation: pn-tail-swish 1.3s ease-in-out infinite;
+}
+
+/* Legs move as the crocodile walks */
+.pn-crocodile__front-leg {
+  transform-box: view-box;
+  transform-origin: 233px 165px;
+  animation: pn-leg-step 0.7s ease-in-out infinite alternate;
+}
+
+.pn-crocodile__back-leg {
+  transform-box: view-box;
+  transform-origin: 111px 164px;
+  animation: pn-leg-step 0.7s ease-in-out infinite alternate-reverse;
+}
+
+/* Jaw opens and closes */
+.pn-crocodile__jaw {
+  transform-box: view-box;
+  transform-origin: 270px 121px;
+  animation: pn-jaw-snap 2.4s ease-in-out infinite;
+}
+
+/* Eye blinks */
+.pn-crocodile__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pn-eye-blink 4s infinite;
+}
+
+/* Medical heart beats */
+.pn-crocodile__heart {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pn-heart-beat 1s ease-in-out infinite;
+}
+
+.pn-crocodile__pulse {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: pn-heartbeat-line 1.6s linear infinite;
+}
+
+/* Stethoscope moves gently */
+.pn-crocodile__stethoscope {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pn-stethoscope-sway 2s ease-in-out infinite;
+}
+
+/* Logo badge remains steady and readable */
+.pn-crocodile__badge {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pn-badge-breathe 2.5s ease-in-out infinite;
+}
+
+.pn-crocodile__sparkles {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pn-sparkle 2s ease-in-out infinite;
+}
+
+.pn-crocodile__shadow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pn-shadow-breathe 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes pn-tail-swish {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(8deg); }
+}
+
+@keyframes pn-leg-step {
+  from { transform: rotate(-9deg) translateY(0); }
+  to { transform: rotate(9deg) translateY(-3px); }
+}
+
+@keyframes pn-jaw-snap {
+  0%, 35%, 100% { transform: rotate(0); }
+  40% { transform: rotate(12deg); }
+  46% { transform: rotate(3deg); }
+  50% { transform: rotate(0); }
+}
+
+@keyframes pn-eye-blink {
+  0%, 43%, 47%, 100% { transform: scaleY(1); }
+  45% { transform: scaleY(0.08); }
+}
+
+@keyframes pn-heart-beat {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(1.15); }
+  24% { transform: scale(1); }
+  36% { transform: scale(1.1); }
+  48% { transform: scale(1); }
+}
+
+@keyframes pn-heartbeat-line {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pn-stethoscope-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes pn-badge-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+@keyframes pn-sparkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes pn-shadow-breathe {
+  from { transform: scaleX(0.96); opacity: 0.1; }
+  to { transform: scaleX(1.04); opacity: 0.2; }
+}
+
+/* Keep animations comfortable for visitors who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  .pn-crocodile *,
+  .pn-crocodile *::before,
+  .pn-crocodile *::after {
+    animation: none !important;
+  }
+}

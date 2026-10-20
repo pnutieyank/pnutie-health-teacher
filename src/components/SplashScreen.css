@@ -1,0 +1,252 @@
+/* Full-screen splash background */
+.pn-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+  background: #ffffff;
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 700ms ease,
+    visibility 700ms ease;
+}
+
+/* Smoothly reveal the website */
+.pn-splash--exit {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pn-splash__content {
+  width: min(100%, 520px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  animation: pn-content-enter 800ms ease both;
+}
+
+/* Logo container */
+.pn-splash__logo-wrap {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(100%, 460px);
+  margin-bottom: 20px;
+
+  animation: pn-logo-float 3s ease-in-out infinite;
+}
+
+/* Soft green glow behind the logo */
+.pn-splash__glow {
+  position: absolute;
+  inset: 15% 10%;
+  z-index: -1;
+
+  border-radius: 50%;
+  background: rgba(0, 105, 65, 0.08);
+  filter: blur(35px);
+
+  animation: pn-glow-pulse 2s ease-in-out infinite;
+}
+
+.pn-splash__logo {
+  display: block;
+
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+
+  mix-blend-mode: multiply;
+
+  filter: drop-shadow(0 8px 14px rgba(0, 80, 45, 0.08));
+}
+
+/* Decorative heartbeat trace */
+.pn-splash__heartbeat {
+  position: absolute;
+  top: 38%;
+  left: 43%;
+
+  width: 14%;
+  color: #ff4255;
+
+  opacity: 0.85;
+  transform: translate(-50%, -50%);
+
+  animation: pn-heartbeat 1.2s ease-in-out infinite;
+}
+
+.pn-splash__heartbeat svg {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  filter: drop-shadow(0 0 5px rgba(255, 50, 75, 0.45));
+}
+
+/* Brand typography */
+.pn-splash__brand h1 {
+  margin: 0;
+
+  color: #006b42;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.pn-splash__brand p {
+  margin: 7px 0 0;
+
+  color: #b58a00;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+}
+
+/* Loading indicator */
+.pn-splash__loader {
+  width: 100px;
+  height: 3px;
+
+  margin-top: 35px;
+  overflow: hidden;
+
+  border-radius: 99px;
+  background: #e6eee9;
+}
+
+.pn-splash__loader span {
+  display: block;
+
+  width: 45%;
+  height: 100%;
+
+  border-radius: inherit;
+  background: #00784a;
+
+  animation: pn-loading 1.1s ease-in-out infinite;
+}
+
+.pn-splash__message {
+  margin: 16px 0 0;
+
+  color: #75847b;
+
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+/* Animations */
+@keyframes pn-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pn-logo-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-5px) scale(1.008);
+  }
+}
+
+@keyframes pn-glow-pulse {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pn-heartbeat {
+  0%, 100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+
+  30% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes pn-loading {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(330%);
+  }
+}
+
+/* Respect accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+  .pn-splash *,
+  .pn-splash *::before,
+  .pn-splash *::after {
+    animation: none !important;
+  }
+
+  .pn-splash,
+  .pn-splash--exit {
+    transition-duration: 150ms;
+  }
+}
+
+.pn-splash__animated-crocodile {
+  width: min(100%, 420px);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.pn-splash__logo-wrap {
+  width: min(100%, 460px);
+}
+
+@media (max-width: 480px) {
+  .pn-splash {
+    padding: 20px;
+  }
+
+  .pn-splash__animated-crocodile {
+    width: min(100%, 340px);
+  }
+}

@@ -1,3 +1,5 @@
+import SplashScreen from "./components/SplashScreen";
+import AnimatedCrocodile from "./components/AnimatedCrocodile";
 import PunutiAI from "./components/PunutiAI";
 import { BrowserRouter, Routes, Route, NavLink, useLocation, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -44,14 +46,19 @@ function Tracker(){
 function FloatingWhatsApp(){const [wa,setWa]=useState("");useEffect(()=>{supabase.from("contact_settings").select("*").limit(1).maybeSingle().then(({data})=>{const v=data?.whatsapp||data?.whatsapp_number||"";setWa(v?String(v):"");});},[]);if(!wa)return null;const href=wa.startsWith("http")?wa:`https://wa.me/${wa.replace(/\D/g,"")}`;return <a className="floating-whatsapp" href={href} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp"><MessageCircle size={25}/></a>}
 function Footer(){return <footer className="footer"><div className="container footer-grid"><div><div className="brand footer-brand"><span className="brand-icon"><img src="/punutie-logo.png" alt="PUNUTIE HEALTH TEACHER" /></span></div><p>Community health education and consultancy focused on helping people make informed health decisions.</p></div><div><h3>Explore</h3><NavLink to="/talks">Health Talks</NavLink><NavLink to="/videos">Videos</NavLink><NavLink to="/audio">Audio Talks</NavLink><NavLink to="/articles">Articles</NavLink></div><div><h3>Important</h3><NavLink to="/about">About</NavLink><NavLink to="/contact">Contact</NavLink></div></div><div className="container footer-bottom"><p>Information provided on this website is for educational purposes only and should not replace professional medical diagnosis, treatment, or emergency care.</p><span>© {new Date().getFullYear()} PUNUTIE HEALTH TEACHER</span></div></footer>}
 
-function PublicLayout(){
+function PublicLayout() {
   return (
     <>
-      <Header/>
-      <Outlet/>
-      <FloatingWhatsApp/>
-      <Footer/>
-      <PunutiAI/>
+      <SplashScreen />
+
+      <Header />
+      <Outlet />
+
+      <AnimatedCrocodile className="pn-floating-crocodile" />
+
+      <FloatingWhatsApp />
+      <Footer />
+      <PunutiAI />
     </>
   );
 }
