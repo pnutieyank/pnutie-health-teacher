@@ -1,4 +1,7 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import "./PunutiAI.css";
 
 type Message = {
   role: "user" | "assistant";
@@ -217,11 +220,31 @@ export default function PunutiAI({ context = "" }: PunutiAIProps) {
                         : "none",
                   }}
                 >
-                  {item.content}
+                  {item.role === "assistant" ? (
+  <div className="pn-ai-markdown">
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        a: ({ ...props }) => (
+          <a
+            {...props}
+            target="_blank"
+            rel="noopener noreferrer"
+          />
+        ),
+      }}
+    >
+      {item.content}
+    </ReactMarkdown>
+  </div>
+) : (
+  item.content
+)}
                 </div>
               </div>
             ))}
-
+                
+              
             {loading && (
               <div
                 style={{
